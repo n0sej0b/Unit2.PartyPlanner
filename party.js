@@ -151,13 +151,13 @@ async function addEvent(event) {
                     const dateString = eventDateTime.toLocaleDateString();
                     const timeString = eventDateTime.toLocaleTimeString();
                     eventCard.innerHTML = `
-                        <h2>${party}</h2>
+                        <h2>${party.name}</h2>
                         <p>${dateString}</p>
                         <p>${timeString}</p>
                         <p>${party.location}</p>
                         <p>${party.description}</p>
                         <button class='rsvpId-${party.id}'>RSVP</button>
-                        <button id='delete'-${party.id}' class='delete'>Del</button>
+                        <button id='delete-${party.id}' class='delete'>Del</button>
                         <section id='guest-list-${party.id}'>
                         <button class 'guestList' id=guestList-${party.id}'>Guest List</button>
                         </section>           
@@ -165,7 +165,7 @@ async function addEvent(event) {
                         `;
                         return eventCard;
                 });
-                partyList.replaceChildren(...eventCard);
+                partyList.replaceChildren(...eventCards);
 
                 if (state.currentGuest.length !== 0) {
                     const welcomeM = document.createElement("h2");
@@ -190,6 +190,7 @@ async function addEvent(event) {
                     e.preventDefault();
                     if (e.target.className === 'delete') {
                         const deID = e.target.id.split('-')[1];
+                        console.log(e.target.id);
                         deleteEvent(deID);
                     }else if (e.target.className === "rsvp") { 
                         const evtId = parseInt(e.target.id.split("-")[1]);
@@ -222,17 +223,17 @@ async function addEvent(event) {
                   addEvent(eventObject);
                 });
                 console.log(guestLog);
-                // guestLog.addEventListener("submit", (e) => { 
-                //   e.preventDefault();
-                //   const guestObject = {
-                //     name: guestLog.guestName.value,
-                //     email: guestLog.email.value,
-                //     phone: guestLog.phone.value,
-                //   };
-                //   state.currentGuest = guestObject;
+                guestLog.addEventListener("submit", (e) => { 
+                  e.preventDefault();
+                  const guestObject = {
+                    name: guestLog.guestName.value,
+                    email: guestLog.email.value,
+                    phone: guestLog.phone.value,
+                  };
+                  state.currentGuest = guestObject;
                  
-                //   addGuest(state.currentGuest);
-                // });
+                  addGuest(state.currentGuest);
+                });
                 
                 // Finally run the code
                 getEvents();          
