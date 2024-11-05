@@ -26,7 +26,7 @@ async function getEvents() {
 
         const responseRsvp = await fetch(RSVP_URL);
         const jsonRsvp = await responseRsvp.json();
-        state.rspvs = jsonRsvp.data;
+        state.rsvps = jsonRsvp.data;
         } catch (error) {
         console.error(error);
         }
@@ -221,18 +221,18 @@ async function addEvent(event) {
                   }; 
                   addEvent(eventObject);
                 });
-                
-                guestLog.addEventListener("submit", (e) => { 
-                  e.preventDefault();
-                  const guestObject = {
-                    name: guestLog.guestName.value,
-                    email: guestLog.email.value,
-                    phone: guestLog.phone.value,
-                  };
-                  state.currentGuest = guestObject;
+                console.log(guestLog);
+                // guestLog.addEventListener("submit", (e) => { 
+                //   e.preventDefault();
+                //   const guestObject = {
+                //     name: guestLog.guestName.value,
+                //     email: guestLog.email.value,
+                //     phone: guestLog.phone.value,
+                //   };
+                //   state.currentGuest = guestObject;
                  
-                  addGuest(state.currentGuest);
-                });
+                //   addGuest(state.currentGuest);
+                // });
                 
                 // Finally run the code
                 getEvents();          
